@@ -1,27 +1,19 @@
-import java.io.IOException;
 import java.io.FileInputStream;
-import java.util.logging.FileHandler;
-import java.util.logging.Handler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
-
-class AutoclosableLoggerFileHandler extends FileHandler implements AutoCloseable {
-  public AutoclosableLoggerFileHandler(String pattern, boolean append) throws IOException {
-    super(pattern, append);
-  }
-
-  @Override
-  public void close() {
-    super.close();
-  }
-}
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 
+/**
+ * The MovieApp class is the main entry point for the application.
+ * It sets up logging, establishes a database connection, and starts the controller loop.
+ */
 public class MovieApp {
   private static final String LOG_FILE = "MovieApp.log";
   private static final Logger logger = Logger.getLogger(MovieApp.class.getName());
@@ -29,6 +21,12 @@ public class MovieApp {
   private static final String STORE_NO = "100001";
   private static final String CUSTOMER_ID = "C12345678";
 
+  /**
+   * The main method is the entry point of the application.
+   * It sets up logging and establishes a database connection.
+   *
+   * @param args Command line arguments (unused).
+   */
   public static void main(String[] args) {
     try (AutoclosableLoggerFileHandler logFileHandler =
         new AutoclosableLoggerFileHandler(LOG_FILE, false)) {
