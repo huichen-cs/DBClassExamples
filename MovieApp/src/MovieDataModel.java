@@ -10,10 +10,31 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * This class provides methods to interact with the movie database. Along with
- * a few other classes, this class constitutes the "model" of the application.
+ * This class provides methods to interact with the movie database. Along with a few other classes,
+ * this class constitutes the "model" of the application.
  */
 public class MovieDataModel {
+
+  public static Customer getCustomerById(Connection connection, String customerId)
+      throws SQLException {
+    String sql = "SELECT * FROM P1Customer WHERE id = ?";
+    try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+      stmt.setString(1, customerId);
+      try (ResultSet rs = stmt.executeQuery()) {
+        if (rs.next()) {
+          return new Customer(rs.getString("id"),
+              rs.getString("name"),
+              rs.getInt("addressID"),
+              rs.getString("homephone"),
+              rs.getString("cellphone"),
+              rs.getString("primaryemail"),
+              rs.getString("secondemail"));
+        }
+      }
+    }
+    return null;
+  }
+
   /**
    * Retrieves all movies from the database.
    *
@@ -99,8 +120,8 @@ public class MovieDataModel {
 
 
   /**
-   * Retrieves summaries of customer transactions from the database. The summary of
-   * a transaction does not contain item level details.
+   * Retrieves summaries of customer transactions from the database. The summary of a transaction
+   * does not contain item level details.
    *
    * @param connection the database connection
    * @param storeNo the store number
@@ -146,8 +167,8 @@ public class MovieDataModel {
   }
 
   /**
-   * Retrieves the summary of a customer transaction by transaction number. he summary of
-   * a transaction does not contain item level details.
+   * Retrieves the summary of a customer transaction by transaction number. he summary of a
+   * transaction does not contain item level details.
    *
    * @param connection the database connection
    * @param storeNo the store number
@@ -405,8 +426,7 @@ public class MovieDataModel {
       throws SQLException {
     String insertTransSql =
         "INSERT INTO P1Transaction (transno, custid, transdate, transtime, price, "
-            + "tax1, tax2, tax3, tax4, tax1rate, tax2rate, tax3rate, tax4rate, total) "
-            + "VALUES "
+            + "tax1, tax2, tax3, tax4, tax1rate, tax2rate, tax3rate, tax4rate, total) " + "VALUES "
             + "(?, ?, ?, CURRENT_TIME, ?, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, ?)";
 
     try (PreparedStatement stmt = connection.prepareStatement(insertTransSql)) {

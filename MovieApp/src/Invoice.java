@@ -159,6 +159,9 @@ public class Invoice implements Iterable<InvoiceItem> {
     items.add(new InvoiceItem(item));
   }
 
+  public boolean isEmpty() {
+    return items.isEmpty();
+  }
 
   public Iterator<InvoiceItem> iterator() {
     return items.iterator();

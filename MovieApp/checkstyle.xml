@@ -360,8 +360,9 @@
              default="checkstyle-xpath-suppressions.xml" />
       <property name="optional" value="true"/>
     </module>
-    <module name="SuppressionFilter">
-        <property name="file" value="suppressions.xml"/>
-    </module>
+    <!-- <module name="SuppressionFilter">
+      <property name="file" value="suppressions.xml"/>
+      <property name="optional" value="false"/>
+    </module> -->
   </module>
 </module>

@@ -2,12 +2,14 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 /**
- * The MovieController class handles the user interactions and controls the
- * flow of the movie application.
+ * The MovieController class handles the user interactions and controls the flow of the movie
+ * application.
  */
 public class MovieController {
+  private static final Logger logger = Logger.getLogger(MovieController.class.getName());
   private static final Scanner in = new Scanner(System.in);
 
   /**
@@ -20,6 +22,12 @@ public class MovieController {
    */
   public static void controllerLoop(Connection connection, String storeNo, String customerId)
       throws SQLException {
+    if (MovieDataModel.getCustomerById(connection, customerId) == null) {
+      MovieView.displayInvalidCustomerMsg();
+      return;
+    }
+    logger.info("Starting the movie application controller loop for Customer ID: " + customerId);
+
     int action = 0;
     do {
       System.out.print(MovieView.getMenuText());

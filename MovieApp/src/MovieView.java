@@ -14,10 +14,14 @@ public class MovieView {
    */
   public static String getMenuText() {
     return "1. [Easy] List all movies\n" + "2. [Easy] List all studios\n"
-        + "3. [Midely Hard] List Amblin studios\n"
+        + "3. [Not Very Hard] List Amblin studios\n"
         + "4. [Very Hard] List customer transaction summary\n"
         + "5. [Very Very Hard] Print customer invoice\n" + "6. [Hardest] Order movie media\n"
         + "0. Exit\n" + "Enter your choice: ";
+  }
+
+  public static void displayInvalidCustomerMsg() {
+    System.out.printf("Invalid customer ID. Ensure the customer exists in the database.\n");
   }
 
   /**
@@ -93,6 +97,10 @@ public class MovieView {
    * @param invoice the invoice to display
    */
   public static void displayCustomerInvoice(Invoice invoice) {
+    if (invoice == null || invoice.isEmpty()) {
+      System.out.printf("No invoice found for the transaction number or the customer.\n");
+      return;
+    }
     System.out.printf("%s\n", "-".repeat(LINE_WIDTH));
     System.out.printf("Store No: %s\n", invoice.getStoreNo());
     System.out.printf("Customer: %s (%s)\n", invoice.getCustomerName(), invoice.getCustomerId());
@@ -146,5 +154,13 @@ public class MovieView {
 
   public static void promptForTransactionNo() {
     System.out.print("Enter transaction number: ");
+  }
+
+  public static void displaySystemErrorMsg(Exception e) {
+    System.err.println("System error. Call technical support! " + e.getMessage());
+  }
+
+  public static void displayLogErrorMsg(Exception e) {
+    System.err.println("Error initializing log file: " + e.getMessage());
   }
 }
