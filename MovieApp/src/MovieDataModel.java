@@ -15,6 +15,14 @@ import java.util.List;
  */
 public class MovieDataModel {
 
+  /**
+   * Retrieves a customer from the database by their ID.
+   *
+   * @param connection the database connection
+   * @param customerId the ID of the customer to retrieve
+   * @return the customer object if found, otherwise null
+   * @throws SQLException if a database access error occurs
+   */
   public static Customer getCustomerById(Connection connection, String customerId)
       throws SQLException {
     String sql = "SELECT * FROM P1Customer WHERE id = ?";
