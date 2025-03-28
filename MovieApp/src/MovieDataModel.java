@@ -229,10 +229,12 @@ public class MovieDataModel {
    */
   public static Invoice getCustomerInvoiceByTransactionNo(Connection connection, String storeNo,
       String customerId, String transactionNo) throws SQLException {
-    String query = "SELECT * " + "FROM P1Store AS s Cross JOIN P1Transaction AS t "
+    String query = "SELECT * "
+        + "FROM P1Store AS s CROSS JOIN P1Transaction AS t "
         + "INNER JOIN P1TransactionDetail AS d ON t.transno = d.transno "
         + "INNER JOIN P1Customer AS c ON t.custid = c.id "
-        + "INNER JOIN P1Item AS i on d.itemnum = i.itemnum " + "WHERE t.transno = ? AND custid = ?";
+        + "INNER JOIN P1Item AS i on d.itemnum = i.itemnum "
+        + "WHERE t.transno = ? AND custid = ?";
 
     Invoice invoice = new Invoice(storeNo, customerId, transactionNo);
     try (PreparedStatement stmt = connection.prepareStatement(query)) {
